@@ -101,7 +101,7 @@ alter table test_emp1 modify empno primary key;
 --6.dept 테이블의 deptno에 고유키 제약조건을 추가한후
 --6.deptno 컬럼이 dept 테이블의 deptno를 참조하도록 외래키 제약조건 추가
 alter table dept modify deptno primary key;
-alter table test_emp1 add constraint foreign key deptno references dept(deptno);
+alter table test_emp1 add foreign key (deptno) references dept(deptno);
 --7.ename 컬럼에 not null 제약조건 추가
 alter table test_emp1 add constraint nn_ename check(ename is not null);
 
@@ -110,3 +110,4 @@ alter table test_emp1 drop constraint nn_ename;
 --9. comm 컬럼 삭제
 alter table test_emp1 drop column comm;
 --10.test_emp 테이블 삭제
+drop table test_emp1;
