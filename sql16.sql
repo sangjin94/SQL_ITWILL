@@ -68,7 +68,7 @@ desc ex_users;
 --(1) alter table 테이블이름 drop column 컬럼이름;
 --(2) alter table 테이블이름 drop constraint 제약조건이름;
 --nn_user_email 제약조건 삭제
-alter table ex_users drop constraint NN_USER_EMAIL;
+alter table dept drop constraint SYS_C007048;
 --user_email 컬럼 삭제
 alter table ex_users drop column user_email;
 
@@ -89,7 +89,11 @@ alter table ex_users modify user_pw VARCHAR2(100 BYTE);
 --insert into 테이블이름1 select * from 테이블이름2;
 create table test_emp1 as 
 select * from emp;
+--테이블이 생성된 경우에 테이블 내용만 복사
+insert into 테이블이름
+select *from emp;
 
+desc test_emp1;
 --2. etc 컬럼 추가. 20byte 문자열
  alter table test_emp1 add etc varchar2(20);
 --3. etc 컬럼을 remark 이름으로 변경.
@@ -97,6 +101,8 @@ alter table test_emp1 rename column etc to remark;
 --4. remark 컬럼의 데이터타입을 100byte 문자열로 변경
 alter table test_emp1 modify remark varchar2(100);
 --5. empno 컬럼에 primary key 제약조건 추가.
+alter table test_emp1 
+add constraint pk_test_emp1 primary key(empno);
 alter table test_emp1 modify empno primary key;
 --6.dept 테이블의 deptno에 고유키 제약조건을 추가한후
 --6.deptno 컬럼이 dept 테이블의 deptno를 참조하도록 외래키 제약조건 추가
@@ -104,10 +110,16 @@ alter table dept modify deptno primary key;
 alter table test_emp1 add foreign key (deptno) references dept(deptno);
 --7.ename 컬럼에 not null 제약조건 추가
 alter table test_emp1 add constraint nn_ename check(ename is not null);
-
+alter table test_emp1 modify ename not null;
+alter table test_emp1 constraint nn_ename not null;
 --8. 7에서 만든 제약조건 삭제
 alter table test_emp1 drop constraint nn_ename;
 --9. comm 컬럼 삭제
 alter table test_emp1 drop column comm;
 --10.test_emp 테이블 삭제
 drop table test_emp1;
+
+DDL : create, drop, alter, truncate
+DQL : select
+DML : insert , update , delete, 
+TCL : commit , rollback 
