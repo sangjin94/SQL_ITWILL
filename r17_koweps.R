@@ -5,7 +5,7 @@ library(tidyverse)
 library(ggthemes)
 
 # Rdata 파일을 로드
-load(file = 'datesets/koweps2.Rdata')
+load(file = 'datasets/koweps.Rdata')
 
 head(welfare)
 
@@ -65,14 +65,16 @@ welfare %>%
   filter(!is.na(job)&!is.na(income)) %>% 
   group_by(job) %>% 
   summarise(mean_income=mean(income)) %>% arrange(-mean_income) %>% head(n=10)
-ggplot(job_income_top)+geom_col(mapping = aes(x=job,y=mean_income,fill=job))
+ggplot(job_income_top)+
+  geom_col(mapping = aes(y=reorder(job,mean_income),x=mean_income,fill=job))
 #직종별 평균 월소득 하위10개 직종 이름, 시각화
 job_income_bot<-
 welfare %>% 
   filter(!is.na(job)&!is.na(income)) %>% 
   group_by(job) %>% 
   summarise(mean_income=mean(income)) %>% arrange(mean_income) %>% head(n=10)
-ggplot(job_income_bot)+geom_col(mapping = aes(x=job,y=mean_income,fill=job))
+ggplot(job_income_bot)+
+  geom_col(mapping = aes(y=reorder(job,mean_income),x=mean_income,fill=job))
 #직종별 종사자 수 20명 이상인 직종에서 평균 월소득 상위 하위10개
 job_20<-
 welfare %>% 
@@ -87,10 +89,23 @@ left_join(job_20,welfare,by="job") %>%
   filter(!is.na(income)) %>% 
   group_by(job) %>% summarise(mean_income=mean(income)) %>% arrange(mean_income)%>% head(n=10)
 #남성 평균 월소득 상위 10개 직종
+male_income_avg<-
 welfare %>%filter(!is.na(job)&!is.na(income)&gender=='Male') %>% 
-  group_by(job) %>% summarise(mean_income=mean(income)) %>% arrange(-mean_income)%>% head(n=10)
+  group_by(job) %>% 
+  summarise(mean_income=mean(income),n=n()) %>% 
+  arrange(-mean_income)
+male_income_avg %>% head(n=10)
 #여성 평균 월소득 상위 10개 직종
+female_income_avg<-
 welfare %>%filter(!is.na(job)&!is.na(income)&gender=='Female') %>% 
-  group_by(job) %>% summarise(mean_income=mean(income)) %>% arrange(-mean_income)%>% head(n=10)
+  group_by(job) %>% 
+  summarise(mean_income=mean(income),n=n()) %>%
+  arrange(-mean_income)
+female_income_avg %>% head(n=10)
 #남성평균 월소득 상위 10개직종. 직종별 남성인구가 10명이상인 경우.
+male_income_avg %>% filter(n>10) %>% head(n=10)
 #여성평균 월소득 상위 10개직종. 직종별 여성인구가 10명이상인 경우.
+female_income_avg %>% filter(n>10) %>% head(n=10)
+
+
+
