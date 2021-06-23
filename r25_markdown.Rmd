@@ -1,0 +1,30 @@
+---
+title: "PDF만들기"
+author: "Jin"
+date: '2021 6 23 '
+output:
+  pdf_document:
+    latex_engine: xelatex
+mainfont: Gulim
+---
+
+#RMD 파일을 PDF로 변환(Knit) 하기 
+
+1. tinytex 패키지를 설치한 후 install_tynitex() 함수를 호출해서 TinyTex 프로그램을 PC 에 설치
+
+```{r,eval=FALSE}
+install.packages('tinytex')
+
+```
+```{r,eval=FALSE}
+tinytex::install_tinytex()
+```
+
+2. RMD 파일의 헤더에 PDF 변환 엔진 관련 설정을 추가.
+```
+output:
+  pdf_document:
+    latex_engine: xelatex
+mainfont: MalgunGothic
+```
+

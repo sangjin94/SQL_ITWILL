@@ -1,0 +1,37 @@
+---
+title: "First Markdown"
+author: "Jin"
+date: '2021 6 23 '
+output: html_document
+---
+
+R 코드 청크(chunk) : 문서에 R 코드를 삽입하고 실행함.
+```{r setup, include=FALSE}
+##R 코드의 주석(comment)
+# RMD 문서에 포함된 모든 코드 청크에 적용할 공통 옵션들을 설정.
+#echo = TRUE : 코드 청크와 그 실행 결과를 문서(보고서)에 포함.
+#echo = FALSE: 코드 청크는 문서에 포함하지않고, 
+#코드 실행 결과만 문서에 포함. 
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+
+```{r cars, echo=TRUE}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
